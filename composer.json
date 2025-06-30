@@ -1,0 +1,18 @@
+{
+    "name": "accela-framework/sitemap-xml-plugin",
+    "description": "Sitemap.xml generator for Accela",
+    "keywords": ["Accela", "SPA", "php framework", "sitemap.xml"],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/accela-framework/sitemap-xml-plugin",
+    "authors": [
+        {
+            "name": "green spot",
+            "email": "in.green.spot@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "files": ["src/load.php"]
+    }
+}
