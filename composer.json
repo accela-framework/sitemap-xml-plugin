@@ -11,7 +11,9 @@
             "email": "in.green.spot@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "accela-framework/accela": ">=0.4"
+    },
     "autoload": {
         "files": ["src/load.php"]
     }
