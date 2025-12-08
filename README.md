@@ -1,7 +1,7 @@
 ## usage
 
 ```
-$ composer require accela-framework/sitmap-xml-plugin
+$ composer require accela-framework/sitemap-xml-plugin
 ```
 
 ### page-init.php
