@@ -1,19 +1,25 @@
 <?php
+
 use function Accela\el;
+
+/**
+ * @var Accela\Accela $accela
+ */
+$accela;
 
 $dom = new DOMDocument('1.0', 'UTF-8');
 $dom->preserveWhiteSpace = false;
 $dom->formatOutput = true;
-$dom->loadXML(Accela\capture(function(){
+$dom->loadXML(Accela\capture(function()use($accela){
 ?>
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <?php
-    $pages = Accela\Page::all();
+    $pages = $accela->pageManager->all();
     usort($pages, function($x, $y) {
       return strcmp($x->path, $y->path);
     });
-    $base = constant("ROOT_URL");
+    $base = $accela->url;
     if(!$base){
       $base = (el($_SERVER, "HTTPS") === "on" ? "https://" : "http://") . el($_SERVER, "HTTP_HOST");
     }
@@ -21,20 +27,20 @@ $dom->loadXML(Accela\capture(function(){
   <?php foreach($pages as $page): ?>
   <?php if($page->path === "/404") continue; ?>
   <?php
-    $vars = ["loc" => $base . ($page->static_path ?: $page->path)];
+    $vars = ["loc" => $base . ($page->staticPath ?: $page->path)];
 
-    if($page->meta_dom->getElementById("accela-sitemap-lastmod")?->textContent){
-      $vars["lastmod"] = $page->meta_dom->getElementById("accela-sitemap-lastmod")->textContent;
+    if($page->metaDom->getElementById("accela-sitemap-lastmod")?->textContent){
+      $vars["lastmod"] = $page->metaDom->getElementById("accela-sitemap-lastmod")->textContent;
     }else{
-      $vars["lastmod"] = date('Y-m-d', filemtime(APP_DIR . "/pages" . $page->path));
+      $vars["lastmod"] = date('Y-m-d', filemtime($accela->getFilePath("/pages" . $page->path)));
     }
 
-    if($page->meta_dom->getElementById("accela-sitemap-changefreq")?->textContent){
-      $vars["changefreq"] = $page->meta_dom->getElementById("accela-sitemap-changefreq")->textContent;
+    if($page->metaDom->getElementById("accela-sitemap-changefreq")?->textContent){
+      $vars["changefreq"] = $page->metaDom->getElementById("accela-sitemap-changefreq")->textContent;
     }
 
-    if($page->meta_dom->getElementById("accela-sitemap-priority")?->textContent){
-      $vars["priority"] = $page->meta_dom->getElementById("accela-sitemap-priority")->textContent;
+    if($page->metaDom->getElementById("accela-sitemap-priority")?->textContent){
+      $vars["priority"] = $page->metaDom->getElementById("accela-sitemap-priority")->textContent;
     }
   ?>
   <url>
