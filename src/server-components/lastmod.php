@@ -1,2 +1,1 @@
-<?php use function Accela\el; ?>
-<div id="accela-sitemap-lastmod"><?php echo el($props, "value"); ?></div>
+<div id="accela-sitemap-lastmod"><?php echo $props["value"] ?? ""; ?></div>

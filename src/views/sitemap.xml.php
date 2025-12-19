@@ -1,7 +1,5 @@
 <?php
 
-use function Accela\el;
-
 /**
  * @var Accela\Accela $accela
  */
@@ -21,7 +19,7 @@ $dom->loadXML(Accela\capture(function()use($accela){
     });
     $base = $accela->url;
     if(!$base){
-      $base = (el($_SERVER, "HTTPS") === "on" ? "https://" : "http://") . el($_SERVER, "HTTP_HOST");
+      $base = ($_SERVER[ "HTTPS"] ?? "" === "on" ? "https://" : "http://") . $_SERVER["HTTP_HOST"] ?? "example.com";
     }
   ?>
   <?php foreach($pages as $page): ?>
