@@ -30,7 +30,8 @@ $dom->loadXML(Accela\capture(function()use($accela){
     if($page->metaDom->getElementById("accela-sitemap-lastmod")?->textContent){
       $vars["lastmod"] = $page->metaDom->getElementById("accela-sitemap-lastmod")->textContent;
     }else{
-      $vars["lastmod"] = date('Y-m-d', filemtime($accela->getFilePath("/pages" . $page->path)));
+      $suffix = preg_match("|/$|", $page->path) ? "index.html" : ".html";
+      $vars["lastmod"] = date('Y-m-d', filemtime($accela->getFilePath("/pages" . $page->path . $suffix)));
     }
 
     if($page->metaDom->getElementById("accela-sitemap-changefreq")?->textContent){
